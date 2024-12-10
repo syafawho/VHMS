@@ -43,15 +43,16 @@ const Dashboard: React.FC = () => {
     return "Vehicle Safe";
   }, [latest]);
 
-  // Fetch data and manage notifications
+  // Fetch latest data and manage notifications
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchLatestData = async () => {
       try {
-        const response = await axios.get<HazardData[]>(
-          "https://vhms-backend.onrender.com/api/log"
+        const response = await axios.get<HazardData>(
+          "https://vhms-backend.onrender.com/api/latest"
         );
-        const data = response.data[response.data.length - 1];
+        const data = response.data;
 
+        // Set default coordinates if missing
         if (data.latitude === 0 && data.longitude === 0) {
           data.latitude = defaultLatitude;
           data.longitude = defaultLongitude;
@@ -77,12 +78,12 @@ const Dashboard: React.FC = () => {
 
         if (isInitialRender) setIsInitialRender(false);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching latest data:", error);
       }
     };
 
-    fetchData();
-    const interval = setInterval(fetchData, 5000); // Updates every 5 seconds
+    fetchLatestData();
+    const interval = setInterval(fetchLatestData, 5000); // Updates every 5 seconds
     return () => clearInterval(interval);
   }, [lastStatus, isInitialRender, getVehicleStatus]);
 

@@ -48,7 +48,7 @@ const Dashboard: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get<HazardData[]>(
-          "http://syafawho.pythonanywhere.com/api/log"
+          "https://vhms-backend.onrender.com/api/log" // Updated backend endpoint
         );
         const data = response.data[response.data.length - 1];
 
@@ -89,7 +89,7 @@ const Dashboard: React.FC = () => {
   // Download CSV function
   const downloadCSV = async () => {
     try {
-      const response = await axios.get("http://syafawho.pythonanywhere.com/api/download_csv", {
+      const response = await axios.get("https://vhms-backend.onrender.com/api/download_csv", {
         responseType: "blob",
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));

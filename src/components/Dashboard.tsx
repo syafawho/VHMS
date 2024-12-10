@@ -48,7 +48,7 @@ const Dashboard: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get<HazardData[]>(
-          "https://vhms-backend.onrender.com/api/log" // Updated backend endpoint
+          "https://vhms-backend.onrender.com/api/log"
         );
         const data = response.data[response.data.length - 1];
 
